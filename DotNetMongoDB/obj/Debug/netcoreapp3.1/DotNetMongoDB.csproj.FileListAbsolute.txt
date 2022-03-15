@@ -61,3 +61,4 @@ C:\Users\Omega\Desktop\Desktop\DotNetMongoDB\DotNetMongoDB\obj\Debug\netcoreapp3
 C:\Users\Omega\Desktop\Desktop\DotNetMongoDB\DotNetMongoDB\obj\Debug\netcoreapp3.1\DotNetMongoDB.dll
 C:\Users\Omega\Desktop\Desktop\DotNetMongoDB\DotNetMongoDB\obj\Debug\netcoreapp3.1\DotNetMongoDB.pdb
 C:\Users\Omega\Desktop\Desktop\DotNetMongoDB\DotNetMongoDB\obj\Debug\netcoreapp3.1\DotNetMongoDB.genruntimeconfig.cache
+C:\Users\Omega\Desktop\Desktop\DotNetMongoDB\DotNetMongoDB\obj\Debug\netcoreapp3.1\DotNetMongoDB.csproj.AssemblyReference.cache

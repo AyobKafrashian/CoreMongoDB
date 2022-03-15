@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DotNetMongoDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -25,12 +21,11 @@ namespace DotNetMongoDB.Pages.Books
             var _context = client.GetDatabase("bookShopDb");
             var _bookServes = _context.GetCollection<book>("books");
 
-
             //Add To Database
             _bookServes.InsertOne(Book);
 
 
-            return Redirect("Books/Index");
+            return Redirect("/Books/Index");
         }
     }
 }

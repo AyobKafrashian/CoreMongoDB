@@ -2,3 +2,14 @@
 @model DotNetMongoDB.Pages.Books.IndexModel
 @{
 }
+
+
+
+<div class="row">
+    @foreach (var item in Model.Book)
+    {
+        <p>@item.Year</p>
+        <p>@item.Name</p>
+        <p>@item.Description</p>
+    }
+</div>
