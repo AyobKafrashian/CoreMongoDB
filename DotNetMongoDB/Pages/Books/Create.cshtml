@@ -1,0 +1,14 @@
+﻿@page
+@model DotNetMongoDB.Pages.Books.CreateModel
+@{
+}
+
+<form method="post">
+    <input asp-for="Book.Year" placeholder="Year" />
+    <br />
+    <input asp-for="Book.Name" placeholder="Name" />
+    <br />
+    <textarea asp-for="Book.Description" placeholder="Description"></textarea>
+    <button>Submit</button>
+    <a href="/Books/index">Back To List</a>
+</form>
