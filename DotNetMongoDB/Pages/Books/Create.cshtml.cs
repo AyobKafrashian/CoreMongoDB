@@ -2,6 +2,7 @@ using DotNetMongoDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Driver;
+using System;
 
 namespace DotNetMongoDB.Pages.Books
 {
@@ -20,6 +21,8 @@ namespace DotNetMongoDB.Pages.Books
             var client = new MongoClient("mongodb://localhost:27017");
             var _context = client.GetDatabase("bookShopDb");
             var _bookServes = _context.GetCollection<book>("books");
+
+            Book.CreateDate = DateTime.Now;
 
             //Add To Database
             _bookServes.InsertOne(Book);

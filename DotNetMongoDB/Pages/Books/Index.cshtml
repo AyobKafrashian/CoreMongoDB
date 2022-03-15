@@ -4,12 +4,32 @@
 }
 
 
+<table class="table">
 
-<div class="row">
-    @foreach (var item in Model.Book)
-    {
-        <p>@item.Year</p>
-        <p>@item.Name</p>
-        <p>@item.Description</p>
-    }
-</div>
+    <a href="/Books/Create" class="btn btn-success">Add Book</a>
+    <br />
+    <thead>
+        <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">CreateDate</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Book)
+        {
+            <tr>
+                <td>@item.Year</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.CreateDate</td>
+                <td>
+                    <a href="/Books/Edit/@item.Id" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

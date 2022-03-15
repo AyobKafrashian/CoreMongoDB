@@ -1,11 +1,12 @@
-﻿@page
-@model DotNetMongoDB.Pages.Books.CreateModel
+﻿@page "{id}"
+@model DotNetMongoDB.Pages.Books.EditModel
 @{
 }
-
 <div class="container">
 
     <form method="post">
+        <input hidden asp-for="Book.Id" />
+
         <input class="form-control" asp-for="Book.Year" placeholder="Year" />
         <br />
         <input class="form-control" asp-for="Book.Name" placeholder="Name" />

@@ -16,7 +16,7 @@ namespace DotNetMongoDB.Pages.Books
             var _context = client.GetDatabase("bookShopDb");
             var _bookServes = _context.GetCollection<book>("books");
 
-            Book = _bookServes.Find(t => true).ToList();
+            Book = _bookServes.Find(t => true).SortByDescending(c => c.CreateDate).ToList();
 
         }
     }
