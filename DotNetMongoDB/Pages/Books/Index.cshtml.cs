@@ -1,23 +1,27 @@
 using DotNetMongoDB.Models;
+using DotNetMongoDB.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetMongoDB.Pages.Books
 {
     public class IndexModel : PageModel
     {
+        #region Constructor
+        private readonly BookServices _bookServices;
+
+        public IndexModel(BookServices bookServices)
+        {
+            _bookServices = bookServices;
+        }
+        #endregion
 
         public List<book> Book { get; set; }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var _context = client.GetDatabase("bookShopDb");
-            var _bookServes = _context.GetCollection<book>("books");
-
-            Book = _bookServes.Find(t => true).SortByDescending(c => c.CreateDate).ToList();
-
+            Book = await _bookServices.GetAsync();
         }
     }
 }

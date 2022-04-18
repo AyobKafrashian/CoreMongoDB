@@ -1,34 +1,36 @@
 using DotNetMongoDB.Models;
+using DotNetMongoDB.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Driver;
+using System.Threading.Tasks;
 
 namespace DotNetMongoDB.Pages.Books
 {
     public class EditModel : PageModel
     {
+        #region Constructor
+        private readonly BookServices _bookServices;
+
+        public EditModel(BookServices bookServices)
+        {
+            _bookServices = bookServices;
+        }
+        #endregion
+
         [BindProperty]
         public book Book { get; set; }
 
-        public void OnGet(string Id)
+        public async Task OnGet(string Id)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var _context = client.GetDatabase("bookShopDb");
-            var _bookServes = _context.GetCollection<book>("books");
-
-            Book = _bookServes.Find(e => e.Id == Id).Single();
+            Book = await _bookServices.GetAsync(Id);
         }
 
-        public IActionResult OnPost(string Id)
+        public async Task<IActionResult> OnPost(string Id)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var _context = client.GetDatabase("bookShopDb");
-            var _bookServes = _context.GetCollection<book>("books");
-            var oldBook = _bookServes.Find(e => e.Id == Id).Single();
-
+            var oldBook = await _bookServices.GetAsync(Id);
             Book.CreateDate = oldBook.CreateDate;
-
-            _bookServes.ReplaceOne(c => c.Id == Book.Id, Book);
+            await _bookServices.UpdateAsync(Id, Book);
 
             return Redirect("/Books/Index");
         }

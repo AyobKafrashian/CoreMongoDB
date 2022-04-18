@@ -1,8 +1,10 @@
 using DotNetMongoDB.Models;
+using DotNetMongoDB.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Driver;
 using System;
+using System.Threading.Tasks;
 
 namespace DotNetMongoDB.Pages.Books
 {
@@ -13,21 +15,22 @@ namespace DotNetMongoDB.Pages.Books
         //step 3 : install MongoDB and open to C:\Program Files\MongoDB\Server\3.4\bin and Open cmd
         //step 4 : type mongod and type mongo
 
+        #region Constructor
+        private readonly BookServices _bookServices;
+
+        public CreateModel(BookServices bookServices)
+        {
+            _bookServices = bookServices;
+        }
+        #endregion
+
         [BindProperty]
         public book Book { get; set; }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var _context = client.GetDatabase("bookShopDb");
-            var _bookServes = _context.GetCollection<book>("books");
-
             Book.CreateDate = DateTime.Now;
-
-            //Add To Database
-            _bookServes.InsertOne(Book);
-
-
+            await _bookServices.CreateAsync(Book);
             return Redirect("/Books/Index");
         }
     }
