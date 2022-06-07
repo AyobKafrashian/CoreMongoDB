@@ -1,13 +1,10 @@
+using DotNetMongoDB.Hubs;
 using DotNetMongoDB.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DotNetMongoDB
 {
@@ -26,6 +23,16 @@ namespace DotNetMongoDB
             #region IOC
             services.AddSingleton<BookServices>();
             #endregion
+
+            services.AddControllersWithViews();
+
+            services.AddSignalR();
+
+            services.AddControllers().AddJsonOptions(options =>
+            {
+
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
 
             services.AddRazorPages();
         }
@@ -51,6 +58,13 @@ namespace DotNetMongoDB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<SignalRServer>("/signalrServer");
+
+                endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller=Employees}/{action=GetEmployeeData}/{id?}");
+
             });
         }
     }

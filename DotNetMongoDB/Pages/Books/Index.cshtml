@@ -3,7 +3,6 @@
 @{
 }
 
-
 <table class="table">
 
     <a href="/Books/Create" class="btn btn-success">Add Book</a>
@@ -17,8 +16,8 @@
             <th scope="col">Options</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model.Book)
+    <tbody id="dataModel">
+        @*@foreach (var item in Model)
         {
             <tr>
                 <td>@item.Year</td>
@@ -29,7 +28,7 @@
                     <a href="/Books/Edit/@item.Id" class="btn btn-warning">Edit</a>
                 </td>
             </tr>
-        }
+        }*@
 
     </tbody>
 </table>

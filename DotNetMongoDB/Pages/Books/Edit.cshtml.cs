@@ -1,9 +1,11 @@
-using DotNetMongoDB.Models;
+﻿using DotNetMongoDB.Models;
 using DotNetMongoDB.Services;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Driver;
 using System.Threading.Tasks;
+using DotNetMongoDB.Hubs;
 
 namespace DotNetMongoDB.Pages.Books
 {
@@ -11,10 +13,12 @@ namespace DotNetMongoDB.Pages.Books
     {
         #region Constructor
         private readonly BookServices _bookServices;
+        private readonly IHubContext<SignalRServer> _signalR;
 
-        public EditModel(BookServices bookServices)
+        public EditModel(BookServices bookServices, IHubContext<SignalRServer> signalR)
         {
             _bookServices = bookServices;
+            _signalR = signalR;
         }
         #endregion
 
@@ -30,7 +34,11 @@ namespace DotNetMongoDB.Pages.Books
         {
             var oldBook = await _bookServices.GetAsync(Id);
             Book.CreateDate = oldBook.CreateDate;
+
             await _bookServices.UpdateAsync(Id, Book);
+
+            //بعد از انجام عملیات ذخیره سازی این متد باید فراخانی شود
+            await _signalR.Clients.All.SendAsync("LoadProdData");
 
             return Redirect("/Books/Index");
         }
